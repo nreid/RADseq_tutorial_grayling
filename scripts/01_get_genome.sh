@@ -18,10 +18,13 @@ GENOMEDIR=../genome
 mkdir -p $GENOMEDIR
 
 wget \
-https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/004/348/285/GCA_004348285.1_ASM434828v1/GCA_004348285.1_ASM434828v1_genomic.fna.gz \
-../
+-P $GENOMEDIR \
+https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/004/348/285/GCA_004348285.1_ASM434828v1/GCA_004348285.1_ASM434828v1_genomic.fna.gz
+
 
 # index the genome using bwa
-module load bwa/0.7.17
 
-bwa index -p $GENOMEDIR/grayling $GENOMEDIR/GCA_004348285.1_ASM434828v1_genomic.fna.gz
+module load bwa/0.7.17
+bwa index \
+-p $GENOMEDIR/grayling \
+$GENOMEDIR/GCA_004348285.1_ASM434828v1_genomic.fna.gz
