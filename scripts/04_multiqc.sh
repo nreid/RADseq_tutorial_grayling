@@ -11,3 +11,19 @@
 #SBATCH -o %x_%j.out
 #SBATCH -e %x_%j.err
 
+
+# input, output directories
+INDIR=../results/fastqc
+
+OUTDIR=../results/multiqc
+mkdir -p $OUTDIR
+
+
+module load MultiQC/1.9
+
+# small RNA
+multiqc --outdir $OUTDIR $INDIR
+
+
+
+
