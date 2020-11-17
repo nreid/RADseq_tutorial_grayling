@@ -21,7 +21,6 @@ mkdir -p $OUTDIR
 
 module load MultiQC/1.9
 
-# small RNA
 multiqc --outdir $OUTDIR $INDIR
 
 
