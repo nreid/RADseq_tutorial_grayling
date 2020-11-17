@@ -1,4 +1,3 @@
-
 #!/bin/bash
 #SBATCH --job-name=raw_data_symlinks
 #SBATCH -n 1
@@ -13,6 +12,7 @@
 #SBATCH -e %x_%j.err
 
 # this script symlinks the raw data pools to the working directory
+# 
 
 RAWDATADIR=../data/pools
 mkdir -p $RAWDATADIR
@@ -22,6 +22,7 @@ POOLPATH="/labs/Wegrzyn/Urban_RAD_ArcticGrayling/raw_fastq/raw_fastq_files"
 for f in ${POOLPATH}/Golden-Pool*fastq.gz; do
         echo $f
         echo $(basename ${f})
+
         ln -s ${f} $RAWDATADIR/$(basename ${f})
 done
 
