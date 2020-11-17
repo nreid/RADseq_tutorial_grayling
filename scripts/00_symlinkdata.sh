@@ -19,9 +19,9 @@ mkdir -p $RAWDATADIR
 
 POOLPATH="/labs/Wegrzyn/Urban_RAD_ArcticGrayling/raw_fastq/raw_fastq_files"
 
-for f in ${fpath}/Golden-Pool*fastq.gz; do
+for f in ${POOLPATH}/Golden-Pool*fastq.gz; do
         echo $f
-        echo `basename ${f}`
-        ln -s ${f} `basename ${f}`
+        echo $(basename ${f})
+        ln -s ${f} $RAWDATADIR/$(basename ${f})
 done
 
