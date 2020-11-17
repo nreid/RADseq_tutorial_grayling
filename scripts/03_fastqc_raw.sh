@@ -32,3 +32,5 @@ FQ=($(find $INDIR -name "*1.fq.gz" | grep -v "rem...fq.gz" | sort))
 FQ1=${FQ[$SLURM_ARRAY_TASK_ID]}
 FQ2=$(echo $FQ1 | sed 's/1.fq.gz/2.fq.gz/')
 
+fastqc -t 2 -o $OUTDIR $FQ1
+fastqc -t 2 -o $OUTDIR $FQ2
