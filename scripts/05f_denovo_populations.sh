@@ -21,7 +21,7 @@ module load stacks/2.53
 
 INDIR=../results/stacks/denovo
 
-POPMAP=../metadata/popmap_total.txt
+POPMAP=../meta/popmap_total.txt
 
 populations \
 -P $INDIR \
