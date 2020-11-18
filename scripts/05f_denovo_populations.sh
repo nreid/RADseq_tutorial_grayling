@@ -27,7 +27,7 @@ populations \
 -P $INDIR \
 -M $POPMAP \
 -p 1 \
--r 1 \
+-R 0.50 \
 --hwe \
 --genepop \
 --vcf \
