@@ -20,9 +20,13 @@ module load stacks/2.53
 # input, output files, directories
 
 INDIR=../results/stacks/denovo
-
+PEDIR=../data/demux
 POPMAP=../meta/popmap_total.txt
 
-tsv2bam -P $INDIR -M $POPMAP -t 10
+tsv2bam \
+-P $INDIR \
+-M $POPMAP \
+-t 10 \
+-R $PEDIR
 
 date
