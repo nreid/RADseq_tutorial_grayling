@@ -2,8 +2,8 @@
 #SBATCH --job-name=samstats
 #SBATCH --mail-user=
 #SBATCH --mail-type=ALL
-#SBATCH -o samstats/%x_%j.out
-#SBATCH -e samstats/%x_%j.err
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=5
 #SBATCH --mem=5G
