@@ -6,7 +6,7 @@
 #SBATCH -e %x_%j.err
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=15G
+#SBATCH --mem=80G
 #SBATCH --qos=general
 #SBATCH --partition=general
 
