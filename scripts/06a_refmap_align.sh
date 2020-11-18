@@ -44,6 +44,9 @@ BAM=${SAM}.bam
 # get the sample ID and use it to specify the read group. 
 RG=$(echo \@RG\\tID:$SAM\\tSM:$SAM)
 
+echo $OUTDIR
+echo $BAM
+
 # run bwa mem to align, then pipe it to samtools to compress, then again to sort
 bwa mem -t 4 -R $RG $REFERENCE $FQ1 $FQ2 | \
 samtools view -S -h -u - | \
