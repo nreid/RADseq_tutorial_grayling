@@ -26,7 +26,7 @@ POPMAP=../meta/popmap_total.txt
 populations \
 -P $INDIR \
 -M $POPMAP \
--p 5 \
+-p 1 \
 -r 1 \
 --hwe \
 --genepop \
