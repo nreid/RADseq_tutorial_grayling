@@ -20,7 +20,7 @@ module load bwa/0.7.17
 module load samtools/1.10
 
 # input, output files and directories
-INDIR=../data/demux/
+INDIR=../data/demux
 
 OUTDIR=../results/aligned
 mkdir -p $OUTDIR
@@ -31,21 +31,26 @@ REFERENCE=../genome/grayling
 # make a bash array of fastq files
 FASTQS=($(ls $INDIR/*1.fq.gz | grep -v "rem...fq.gz"))
 
-# pull out a single fastq file
-INFILE=$(echo ${FASTQS[$SLURM_ARRAY_TASK_ID]})
-# use sed to create an output file name
-OUTFILE=$(echo $INFILE | sed 's/fq.gz/bam/')
+# pull out a single fastq file pair
+FQ1=$(echo ${FASTQS[$SLURM_ARRAY_TASK_ID]})
+FQ2=$(echo $FQ1 | sed 's/1.fq.gz/2.fq.gz/')
+
+# get sample ID
+SAM=$(basename $INFILE .1.fq.gz)
+
+# create bam file name:
+BAM=${SAM}.bam
 
 # get the sample ID and use it to specify the read group. 
-SAM=$(echo $OUTFILE | sed 's/.bam//')
 RG=$(echo \@RG\\tID:$SAM\\tSM:$SAM)
 
 # run bwa mem to align, then pipe it to samtools to compress, then again to sort
-bwa mem -t 4 -R $RG $REFERENCE $INDIR/$INFILE | \
+bwa mem -t 4 -R $RG $REFERENCE $FQ1 $FQ2 | \
 samtools view -S -h -u - | \
-samtools sort -T /scratch/$SAM - >$OUTDIR/$OUTFILE
+samtools sort -T /scratch/${SAM}_${USER} - >$OUTDIR/$BAM
 
 # index the bam file
-samtools index $OUTDIR/$OUTFILE
+samtools index $OUTDIR/$BAM
 
 date
+
