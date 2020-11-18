@@ -15,14 +15,24 @@ date
 
 # load software
 module load stacks/2.53
+module load R/3.6.3
 
 # input, output files, directories
 INDIR=../results/stacks/denovo
 
 # create popmap file
-# we'll only use samples labeled as part of the landscape genomics subsection of the project
-METADATA=../meta/Urban_ddRAD_FishIDs_Bioinformatics_2018.tsv
-POPMAP=../meta/popmap.txt
+	# this R script creates the popmap files required for the next 
+	# steps of stacks. we're using an R script so we can subset 
+	# samples for cstacks, which would take too long with the total 
+	# dataset. the next line of code executes an R script that 
+	# does this. it's commented out for the tutorial because it 
+	# requires the tidyverse packages to be installed, which users 
+	# may not have, but is included to completely document steps required
+	# 
+	# 
+# Rscript make_popmaps.R
+
+POPMAP=../meta/popmap_cstacks.txt
 
 awk '$13 ~ /LandscapeGenomics/' $METADATA | cut -f 3,4 >$POPMAP
 

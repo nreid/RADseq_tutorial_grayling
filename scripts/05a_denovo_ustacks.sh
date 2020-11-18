@@ -14,7 +14,7 @@
 echo "host name : " `hostname`
 echo This is array task number $SLURM_ARRAY_TASK_ID
 
-module load stacks/2.41
+module load stacks/2.53
 
 # this is an array job. the code will be run 33 times, once for each sample, with 20 jobs running simultaneously.
 # each instance will have a SLURM_ARRAY_TASK_ID between 0 and 32. 
