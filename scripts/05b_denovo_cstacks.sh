@@ -34,8 +34,6 @@ INDIR=../results/stacks/denovo
 
 POPMAP=../meta/popmap_cstacks.txt
 
-awk '$13 ~ /LandscapeGenomics/' $METADATA | cut -f 3,4 >$POPMAP
-
 cstacks \
 -P $INDIR \
 -M $POPMAP \
