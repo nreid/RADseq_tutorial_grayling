@@ -36,7 +36,7 @@ FQ1=$(echo ${FASTQS[$SLURM_ARRAY_TASK_ID]})
 FQ2=$(echo $FQ1 | sed 's/1.fq.gz/2.fq.gz/')
 
 # get sample ID
-SAM=$(basename $INFILE .1.fq.gz)
+SAM=$(basename $FQ1 .1.fq.gz)
 
 # create bam file name:
 BAM=${SAM}.bam
