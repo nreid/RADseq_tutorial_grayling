@@ -39,5 +39,5 @@ awk '$13 ~ /LandscapeGenomics/' $METADATA | cut -f 3,4 >$POPMAP
 cstacks \
 -P $INDIR \
 -M $POPMAP \
--n 2
+-n 2 \
 -p 10 
