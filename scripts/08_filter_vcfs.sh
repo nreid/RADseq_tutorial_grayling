@@ -4,8 +4,8 @@
 #SBATCH -N 1
 #SBATCH -c 1
 #SBATCH --mem=50G
-#SBATCH --qos=mcbstudent
-#SBATCH --partition=mcbstudent
+#SBATCH --qos=general
+#SBATCH --partition=general
 #SBATCH --mail-user=
 #SBATCH --mail-type=ALL
 #SBATCH -o %x_%j.out
@@ -37,10 +37,10 @@ vcftools --gzvcf $FREEBA/fb_parallel.snps.vcf --max-missing-count 116 --recode -
 
 
 
-bcftools view $DENOVO/populations.snps.vcf | bcftools filter -s LowQual -e '%QUAL<50' | bgzip -c > $OUTDIR/stacks_denovo.vcf.gz
-bcftools view $REFMAP/populations.snps.vcf.gz | bcftools filter -s LowQual -e '%QUAL<50' | bgzip -c > $OUTDIR/stacks_refmap.vcf.gz
-bcftools view $FREEBA/fb_parallel.vcf.gz | bcftools filter -s LowQual -e '%QUAL<50' | bgzip -c > $OUTDIR/fb.vcf.gz
+# bcftools view $DENOVO/populations.snps.vcf | bcftools filter -s LowQual -e '%QUAL<50' | bgzip -c > $OUTDIR/stacks_denovo.vcf.gz
+# bcftools view $REFMAP/populations.snps.vcf.gz | bcftools filter -s LowQual -e '%QUAL<50' | bgzip -c > $OUTDIR/stacks_refmap.vcf.gz
+# bcftools view $FREEBA/fb_parallel.vcf.gz | bcftools filter -s LowQual -e '%QUAL<50' | bgzip -c > $OUTDIR/fb.vcf.gz
 
-for file in $OUTDIR/*vcf.gz
-do tabix -f -p vcf $file
-done
+# for file in $OUTDIR/*vcf.gz
+# do tabix -f -p vcf $file
+# done
