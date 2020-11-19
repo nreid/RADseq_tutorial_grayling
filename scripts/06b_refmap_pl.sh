@@ -15,6 +15,9 @@ date
 
 # load software
 module load stacks/2.53
+module load GATK/4.1.8.1
+module load bcftools/1.9
+module load htslib/1.9
 
 # input, output files, directories
 INDIR=../results/aligned
@@ -40,3 +43,21 @@ ref_map.pl \
 -X "populations:--structure" \
 -X "populations:--fasta-samples" \
 -X "populations:--fasta-loci"
+
+
+# stacks doesn't include a sequence dictionary in the header, required by some tools. add it. 
+ALIGNDIR=../results/aligned
+BAMDICT=../results/aligned/Golden1A06.bam
+
+gatk UpdateVCFSequenceDictionary \
+     -V $OUTDIR/populations.snps.vcf \
+     --source-dictionary $BAMDICT \
+     --output $OUTDIR/populations.snps.dict.vcf \
+     --replace true
+
+# stacks does not properly sort the vcf file. sort it. 
+bcftools sort --max-mem 30G -O z $OUTDIR/populations.snps.dict.vcf >$OUTDIR/populations.snps.dict.vcf.gz
+
+# index the vcf file. 
+tabix -p vcf $OUTDIR/populations.snps.dict.vcf.gz
+

@@ -16,6 +16,7 @@ date
 
 # load software
 module load stacks/2.53
+module load GATK/4.1.8.1
 
 # input, output files, directories
 
