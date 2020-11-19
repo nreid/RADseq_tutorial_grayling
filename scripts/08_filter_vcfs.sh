@@ -32,7 +32,7 @@ vcftools --gzvcf $DENOVO/populations.snps.vcf --max-missing-count 116 --recode -
 vcftools --gzvcf $REFMAP/populations.snps.dict.vcf.gz --max-missing-count 116 --recode --out $OUTDIR/stacks_refmap --stdout | bgzip >$OUTDIR/stacks_refmap.vcf.gz
 	vcftools --gzvcf $OUTDIR/stacks_refmap.vcf.gz --out $OUTDIR/stacks_refmap --missing-indv
 
-vcftools --gzvcf $FREEBA/fb_parallel.snps.vcf --max-missing-count 116 --recode --out $OUTDIR/fb --stdout | bgzip >$OUTDIR/fb.vcf.gz
+vcftools --gzvcf $FREEBA/fb_parallel.snps.vcf.gz --max-missing-count 116 --recode --out $OUTDIR/fb --stdout | vcfallelicprimitives | bgzip >$OUTDIR/fb.vcf.gz
 	vcftools --gzvcf $OUTDIR/fb.vcf.gz --out $OUTDIR/fb --missing-indv
 
 
