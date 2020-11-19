@@ -38,4 +38,12 @@ grep "^SN" ${FILES[0]} | cut -f 2 > $OUTDIR/SN.txt
 for file in ${FILES[@]}
 do paste $OUTDIR/SN.txt <(grep ^SN $file | cut -f 3) > $OUTDIR/SN2.txt && \
 	mv $OUTDIR/SN2.txt $OUTDIR/SN.txt
+	echo $file
 done
+
+# add a header with sample names
+cat \
+<(echo ${FILES[@]} | sed 's,../results/align_stats/,,g' | sed 's/.stats//g' | sed 's/ /\t/g') \
+$OUTDIR/SN.txt \
+>$OUTDIR/SN2.txt && \
+	mv $OUTDIR/SN2.txt $OUTDIR/SN.txt
