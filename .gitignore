@@ -22,4 +22,5 @@
 .DS_Store
 .Rproj.user
 .Rhistory
-
+!sbf1.bed.gz
+!sbf1_off.bed.gz

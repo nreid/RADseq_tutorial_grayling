@@ -34,3 +34,10 @@ $GENOMEDIR/GCA_004348285.1_ASM434828v1_genomic.fna
 
 module load samtools/1.10
 samtools faidx $GENOMEDIR/GCA_004348285.1_ASM434828v1_genomic.fna
+
+# run an R script to find all sbf1 sites, put them in a bed file in ../meta
+# module load R/3.6.3
+
+# Rscript find_sbf1_sites.R
+# gzip ../meta/sbf1.bed
+# gzip ../meta/sbf1_off.bed

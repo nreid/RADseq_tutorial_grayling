@@ -35,7 +35,7 @@ ref_map.pl \
 -o $OUTDIR \
 -T 10 \
 -X "populations:-p 1" \
--X "populations:-r 1" \
+-X "populations:-R 0.5" \
 -X "populations:--genepop" \
 -X "populations:--hwe" \
 -X "populations:--vcf" \
