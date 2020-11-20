@@ -31,31 +31,31 @@ DENOVO=../results/stacks/denovo
 REFMAP=../results/stacks/refmap
 FREEBA=../results/freebayes
 
-# #############################
-# # filter SITES by missingness
-# #############################
+#############################
+# filter SITES by missingness
+#############################
 
-# # also remove multiallelic sites and indels
+# also remove multiallelic sites and indels
 
-# # stacks de novo-------------------------------
-# vcftools --gzvcf $DENOVO/populations.snps.vcf \
-# 	--max-missing-count 116 --mac 3 --remove-indels --max-alleles 2 --min-alleles 2 \
-# 	--recode \
-# 	--stdout | \
-# 	bgzip >$OUTDIR/stacks_denovo.vcf.gz
+# stacks de novo-------------------------------
+vcftools --gzvcf $DENOVO/populations.snps.vcf \
+	--max-missing-count 116 --mac 3 --remove-indels --max-alleles 2 --min-alleles 2 \
+	--recode \
+	--stdout | \
+	bgzip >$OUTDIR/stacks_denovo.vcf.gz
 
-# 	# output missing individual report
-# 	vcftools --gzvcf $OUTDIR/stacks_denovo.vcf.gz --out $OUTDIR/stacks_denovo --missing-indv
+	# output missing individual report
+	vcftools --gzvcf $OUTDIR/stacks_denovo.vcf.gz --out $OUTDIR/stacks_denovo --missing-indv
 
-# # stacks refmap-------------------------------
-# vcftools --gzvcf $REFMAP/populations.snps.dict.vcf.gz \
-# 	--max-missing-count 116 --mac 3 --remove-indels --max-alleles 2 --min-alleles 2 \
-# 	--recode \
-# 	--stdout | \
-# 	bgzip >$OUTDIR/stacks_refmap.vcf.gz
+# stacks refmap-------------------------------
+vcftools --gzvcf $REFMAP/populations.snps.dict.vcf.gz \
+	--max-missing-count 116 --mac 3 --remove-indels --max-alleles 2 --min-alleles 2 \
+	--recode \
+	--stdout | \
+	bgzip >$OUTDIR/stacks_refmap.vcf.gz
 
-# 	# output missing individual report
-# 	vcftools --gzvcf $OUTDIR/stacks_refmap.vcf.gz --out $OUTDIR/stacks_refmap --missing-indv
+	# output missing individual report
+	vcftools --gzvcf $OUTDIR/stacks_refmap.vcf.gz --out $OUTDIR/stacks_refmap --missing-indv
 
 # # freebayes------------------------------------
 # 	# - note also that:
