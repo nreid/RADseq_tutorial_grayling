@@ -20,7 +20,7 @@ module load bedtools/2.29.0
 INDIR=../results/filtered_vcfs
 
 ##############################
-# check out filtering results:
+# check out filtered results:
 ##############################
 
 vt peek $INDIR/fb_final.vcf.gz
@@ -31,6 +31,7 @@ vt peek $INDIR/refmap_final.vcf.gz
 ##############################
 # compare variant sets
 ##############################
+
 # for two sets: VT partition
 	# we can't directly compare the de novo set because it doesn't have genome coordinates
 vt partition $INDIR/fb_final.vcf.gz $INDIR/refmap_final.vcf.gz
@@ -42,16 +43,7 @@ bcftools isec -O z -p $INDIR/isec $INDIR/fb_final.vcf.gz $INDIR/refmap_final.vcf
 # why do we have such a discrepancy?
 #####################################
 
-# freebayes finds way, way more variants than stacks. why?
-# many variants are indel or complex variants, which stacks doesn't output
-# but does that really explain it all?
-
-bcftools view -m2 -M2 -v snps -H $INDIR/fb_final.vcf.gz | wc -l
-
-# no, 93k biallelic snps remain out of 103k variants
-
-
-# sbf1.bed gives the location of all sbf1 sites in the genome. 
+# sbf1.bed.gz gives the location of all sbf1 sites in the genome. 
 # they need to be matched with mseI sites, so not all will be ddRAD sites
 # we'll count up how many variants fall within 400bp of an sbf1 site
 # we'll do this for stacks refmap and freebayes variant sets
@@ -62,11 +54,11 @@ bcftools view -m2 -M2 -v snps -H $INDIR/fb_final.vcf.gz | wc -l
 # bedtools wants to know the order of chromosomes/contigs in the vcf, this file provides that
 FAI=../genome/GCA_004348285.1_ASM434828v1_genomic.fna.fai
 
-bedtools slop -i ../meta/sbf1.bed -l 400 -r 400 -g $FAI | \
+bedtools slop -i ../meta/sbf1.bed.gz -l 400 -r 400 -g $FAI | \
 bedtools map -a stdin -b ../results/filtered_vcfs/fb_final.vcf.gz -c 1 -o count -g $FAI \
 >$INDIR/fb_sbf1_map.bed
 
-bedtools slop -i ../meta/sbf1.bed -l 400 -r 400 -g $FAI | \
+bedtools slop -i ../meta/sbf1.bed.gz -l 400 -r 400 -g $FAI | \
 bedtools map -a stdin -b ../results/filtered_vcfs/refmap_final.vcf.gz -c 1 -o count -g $FAI \
 >$INDIR/refmap_sbf1_map.bed
 

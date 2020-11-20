@@ -30,7 +30,7 @@ library(tidyverse)
 	bc <- data.frame()
 	for(i in f){
 		seqpool <- str_extract(i,regex("[0-9][0-9][0-9]"))
-		print(pool)
+		print(seqpool)
 		bc <- rbind(bc,cbind(pool=seqpool,read.table(i)))
 	}
 
@@ -43,5 +43,5 @@ library(tidyverse)
 # have a look
 
 # a bunch of individuals in pools 1 and 2 have major problems. these will get dropped when filtering the VCF
-plot(meta$reads_mapped/meta$raw_total_sequences,col=factor(meta$pool)
+plot(meta$reads_mapped/meta$raw_total_sequences,col=factor(meta$pool))
 

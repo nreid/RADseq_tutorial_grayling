@@ -35,6 +35,8 @@ FREEBA=../results/freebayes
 # filter SITES by missingness
 #############################
 
+# also remove multiallelic sites and indels
+
 # stacks de novo-------------------------------
 vcftools --gzvcf $DENOVO/populations.snps.vcf \
 	--max-missing-count 116 --mac 3 --remove-indels --max-alleles 2 --min-alleles 2 \
