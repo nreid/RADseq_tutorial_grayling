@@ -5,7 +5,7 @@
 #SBATCH -c 1
 #SBATCH --mem=50G
 #SBATCH --qos=general
-#SBATCH --partition=general
+#SBATCH --partition=xeon
 #SBATCH --mail-user=
 #SBATCH --mail-type=ALL
 #SBATCH -o %x_%j.out
@@ -44,6 +44,8 @@ cd $SCRIPTDIR
 #######################################
 # pca using plink
 #######################################
+
+### our build of plink2 requires avx instructions, make sure to submit to xeon partition
 
 plink2 --bfile $INDIR/fb --pca --out $PCADIR/fb --allow-extra-chr
 
