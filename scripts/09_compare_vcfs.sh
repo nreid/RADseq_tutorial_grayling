@@ -15,6 +15,7 @@
 module load bcftools/1.9
 module load htslib/1.9
 module load vt/0.57721
+module load bedtools/2.29.0
 
 INDIR=../results/filtered_vcfs
 
@@ -34,17 +35,55 @@ vt peek $INDIR/refmap_final.vcf.gz
 	# we can't directly compare the de novo set because it doesn't have genome coordinates
 vt partition $INDIR/fb_final.vcf.gz $INDIR/refmap_final.vcf.gz
 
-
 # extract intersections with bcftools isec
 bcftools isec -O z -p $INDIR/isec $INDIR/fb_final.vcf.gz $INDIR/refmap_final.vcf.gz
 
-# bcftools view -H isec_fb_gatk/0000.vcf | head -n 10
+#####################################
+# why do we have such a discrepancy?
+#####################################
 
-# look at a few incongruent markers from isec_fb_gatk/0000.vcf, which contains variants called by fb but not gatk
+# freebayes finds way, way more variants than stacks. why?
+# many variants are indel or complex variants, which stacks doesn't output
+# but does that really explain it all?
 
-# chr20	31577045	.	T	C
-	# called by fb, bcf, but not gatk. no clue why. 
-	# apparently lots of support for C alternate allele. 
-	# heterozygous parent has RO:35, AO:21
+bcftools view -m2 -M2 -v snps -H $INDIR/fb_final.vcf.gz | wc -l
 
+# no, 93k biallelic snps remain out of 103k variants
+
+
+# sbf1.bed gives the location of all sbf1 sites in the genome. 
+# they need to be matched with mseI sites, so not all will be ddRAD sites
+# we'll count up how many variants fall within 400bp of an sbf1 site
+# we'll do this for stacks refmap and freebayes variant sets
+
+# 'bedtools slop' creates a window of 400bp on either side of the sbf1 cut site
+# 'bedtools map' counts the vcf records that fall in each sbf1 window
+
+# bedtools wants to know the order of chromosomes/contigs in the vcf, this file provides that
+FAI=../genome/GCA_004348285.1_ASM434828v1_genomic.fna.fai
+
+bedtools slop -i ../meta/sbf1.bed -l 400 -r 400 -g $FAI | \
+bedtools map -a stdin -b ../results/filtered_vcfs/fb_final.vcf.gz -c 1 -o count -g $FAI \
+>$INDIR/fb_sbf1_map.bed
+
+bedtools slop -i ../meta/sbf1.bed -l 400 -r 400 -g $FAI | \
+bedtools map -a stdin -b ../results/filtered_vcfs/refmap_final.vcf.gz -c 1 -o count -g $FAI \
+>$INDIR/refmap_sbf1_map.bed
+
+# combine the counts files
+	# col 4 = fb, col 4 = refmap
+paste $INDIR/fb_sbf1_map.bed <(cut -f 4 $INDIR/refmap_sbf1_map.bed) >$INDIR/sbf1_vcf_counts.bed
+
+# how many variants are sbf1-associated?
+# almost all variants are associated with sbf1 sites in the reference genome. 
+	# probably most others are in sites that have mutations in the ref genome, but not in most of the population
+
+awk '{x+=$4}{y+=$5}END{print x " sbf1-associated variants in fb\n" y " sbf1-associated variants in stacks refmap\n"}' $INDIR/sbf1_vcf_counts.bed
+
+# how many sbf1 sites have variants for each approach?
+awk '{if ($4 > 0) x += 1}END{print x " sbf1 sites have variants in fb"}' $INDIR/fb_sbf1_map.bed
+
+awk '{if ($4 > 0) x += 1}END{print x " sbf1 sites have variants in stacks refmap"}' $INDIR/refmap_sbf1_map.bed
+
+# so about 6100 sbf1 sites don't have called variants in stacks refmap. why? we would have to explore more deeply. 
 
