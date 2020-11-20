@@ -57,21 +57,21 @@ vcftools --gzvcf $REFMAP/populations.snps.dict.vcf.gz \
 	# output missing individual report
 	vcftools --gzvcf $OUTDIR/stacks_refmap.vcf.gz --out $OUTDIR/stacks_refmap --missing-indv
 
-# # freebayes------------------------------------
-# 	# - note also that:
-# 		# 1. bcftools norm normalizes variant representation
-# 		# 2. vcfallelic primitives breaks down haplotype alleles into constituent parts
-# GEN=../genome/GCA_004348285.1_ASM434828v1_genomic.fna
-# bcftools norm -f $GEN $FREEBA/fb_parallel.vcf.gz | \
-# 	vcfallelicprimitives --keep-info --keep-geno | \
-# 	vcfstreamsort | \
-# 	vcftools --vcf - \
-# 	--max-missing-count 116 --mac 3 --remove-indels --max-alleles 2 --min-alleles 2 \
-# 	--recode \
-# 	--stdout | bgzip >$OUTDIR/fb.vcf.gz
+# freebayes------------------------------------
+	# - note also that:
+		# 1. bcftools norm normalizes variant representation
+		# 2. vcfallelic primitives breaks down haplotype alleles into constituent parts
+GEN=../genome/GCA_004348285.1_ASM434828v1_genomic.fna
+bcftools norm -f $GEN $FREEBA/fb_parallel.vcf.gz | \
+	vcfallelicprimitives --keep-info --keep-geno | \
+	vcfstreamsort | \
+	vcftools --vcf - \
+	--max-missing-count 116 --mac 3 --remove-indels --max-alleles 2 --min-alleles 2 \
+	--recode \
+	--stdout | bgzip >$OUTDIR/fb.vcf.gz
 
-# 	# output missing individual report
-# 	vcftools --gzvcf $OUTDIR/fb.vcf.gz --out $OUTDIR/fb --missing-indv
+	# output missing individual report
+	vcftools --gzvcf $OUTDIR/fb.vcf.gz --out $OUTDIR/fb --missing-indv
 
 ###################################
 # filter INDIVIDUALS by missingness
