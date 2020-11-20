@@ -35,7 +35,7 @@ mkdir -p $PCADIR
 
 cd $ADMIXDIR
 for K in {1..10}; \
-	do admixture --cv fb.bed $K | tee log${K}.out
+	do admixture --cv ../variants_reformatted/fb.bed $K | tee log${K}.out
 done
 cd $SCRIPTDIR
 
