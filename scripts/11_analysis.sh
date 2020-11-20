@@ -35,9 +35,11 @@ mkdir -p $PCADIR
 
 cd $ADMIXDIR
 for K in {1..10}; \
-	do admixture --cv $INDIR/fb.bed $K | tee log${K}.out
+	do admixture --cv fb.bed $K | tee log${K}.out
 done
 cd $SCRIPTDIR
+
+# admixture $INDIR/fb.bed 3
 
 #######################################
 # pca using plink
@@ -48,8 +50,6 @@ plink2 --bfile $INDIR/fb --pca --out $PCADIR/fb --allow-extra-chr
 #######################################
 
 #######################################
-
-
 # fst using plink
 
 	# needs the newest version...
