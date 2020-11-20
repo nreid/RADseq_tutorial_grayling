@@ -5,7 +5,7 @@
 #SBATCH -c 1
 #SBATCH --mem=50G
 #SBATCH --qos=general
-#SBATCH --partition=general
+#SBATCH --partition=xeon
 #SBATCH --mail-user=
 #SBATCH --mail-type=ALL
 #SBATCH -o %x_%j.out
