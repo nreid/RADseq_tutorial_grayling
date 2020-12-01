@@ -17,4 +17,6 @@ jid14=$(sbatch --parsable --dependency=afterok:$jid13 06c_alignQC.sh )
 jid15=$(sbatch --parsable --dependency=afterok:$jid14 07_freebayes_parallel.sh )
 jid16=$(sbatch --parsable --dependency=afterok:$jid15 08_filter_vcfs.sh )
 jid17=$(sbatch --parsable --dependency=afterok:$jid16 09_compare_vcfs.sh )
+jid18=$(sbatch --parsable --dependency=afterok:$jid17 10_reformat.sh)
+jid19=$(sbatch --parsable --dependency=afterok:$jid18 11_analysis.sh)
 
