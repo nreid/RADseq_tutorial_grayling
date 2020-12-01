@@ -13,13 +13,19 @@
 hostname
 date
 
-# load software
+##################################
+# run stacks refmap.pl
+##################################
+
+# this script runs the stacks reference mapping module perl wrapper
+
+# load software------------------------------------------------------------
 module load stacks/2.53
 module load GATK/4.1.8.1
 module load bcftools/1.9
 module load htslib/1.9
 
-# input, output files, directories
+# input, output files, directories-----------------------------------------
 INDIR=../results/aligned
 
 OUTDIR=../results/stacks/refmap
@@ -28,7 +34,8 @@ mkdir -p $OUTDIR
 # popmap file
 POPMAP=../meta/popmap_total.txt
 
-# refmap.pl -s option is broken. 
+# run refmap.pl------------------------------------------------------------
+	# provide `populations` options
 ref_map.pl \
 --samples $INDIR \
 --popmap $POPMAP \
@@ -45,7 +52,10 @@ ref_map.pl \
 -X "populations:--fasta-loci"
 
 
-# stacks doesn't include a sequence dictionary in the header, required by some tools. add it. 
+# modify vcf file------------------------------------------------------------
+# stacks doesn't include a sequence dictionary in the header.
+# this is required by some tools. add it using gatk. 
+
 ALIGNDIR=../results/aligned
 BAMDICT=../results/aligned/Golden1A06.bam
 

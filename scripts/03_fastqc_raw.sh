@@ -13,8 +13,9 @@
 #SBATCH -o %x_%A_%a.out
 #SBATCH -e %x_%A_%a.err
 
-
-# run fastqc on everything
+##########################
+# run fastqc 
+##########################
 
 # load software
 module load fastqc/0.11.7
@@ -32,5 +33,6 @@ FQ=($(find $INDIR -name "*1.fq.gz" | grep -v "rem...fq.gz" | sort))
 FQ1=${FQ[$SLURM_ARRAY_TASK_ID]}
 FQ2=$(echo $FQ1 | sed 's/1.fq.gz/2.fq.gz/')
 
+# run fastqc on read 1, read 2
 fastqc -t 2 -o $OUTDIR $FQ1
 fastqc -t 2 -o $OUTDIR $FQ2

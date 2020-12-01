@@ -11,12 +11,22 @@
 #SBATCH --qos=general
 #SBATCH --partition=general
 
-#load software
+hostname
+date
+
+##################################
+# run freebayes to call variants
+##################################
+
+# this script calls variants using freebayes
+
+#load software---------------------------------------------------------------
 module load htslib/1.10.2
 module load freebayes/1.3.1
 module load vcflib/1.0.0-rc1
+module load parallel/20180122
 
-#input, output files, directories
+#input, output files, directories--------------------------------------------
 INDIR=../results/aligned/
 OUTDIR=../results/freebayes
 mkdir -p $OUTDIR
@@ -33,6 +43,8 @@ cat $POPMAP | cut -f 1 | sed 's/$/.bam/' | sed  "s,^,$INDIR," >$BAMLIST
 
 # these are freebayes scripts found in the same location as the executable
 MAKEREGIONS=/isg/shared/apps/freebayes/1.3.1/scripts/fasta_generate_regions.py
+
+# run freebayes-parallel--------------------------------------------------------
 
 bash freebayes_parallel.sh \
 	<(python $MAKEREGIONS ${GEN}.fai 5000000) 30 \

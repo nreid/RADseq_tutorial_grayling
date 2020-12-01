@@ -11,18 +11,27 @@
 #SBATCH -o %x_%j.out
 #SBATCH -e %x_%j.err
 
+
+#####################
+# symlink data
+#####################
+
 # this script symlinks the raw data pools to the working directory
-# 
+	# instead of copying the raw data, we create pointers to it. 
+
+# input, output directories
+POOLPATH="/labs/Wegrzyn/Urban_RAD_ArcticGrayling/raw_fastq/raw_fastq_files"
 
 RAWDATADIR=../data/pools
 mkdir -p $RAWDATADIR
 
-POOLPATH="/labs/Wegrzyn/Urban_RAD_ArcticGrayling/raw_fastq/raw_fastq_files"
-
+# using a for loop, create a symlink for each fastq.gz file
 for f in ${POOLPATH}/Golden-Pool*fastq.gz; do
+        # write filename and file base name to standard out
         echo $f
         echo $(basename ${f})
 
+        # symlink file	
         ln -s ${f} $RAWDATADIR/$(basename ${f})
 done
 

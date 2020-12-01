@@ -14,6 +14,10 @@
 hostname
 date
 
+##################################
+# filter variant sets
+##################################
+
 module load bcftools/1.9
 module load htslib/1.9
 module load vcftools/0.1.16
@@ -37,7 +41,7 @@ FREEBA=../results/freebayes
 
 # also remove multiallelic sites and indels
 
-# stacks de novo-------------------------------
+# stacks de novo-----------------------------------------------------------------------
 vcftools --gzvcf $DENOVO/populations.snps.vcf \
 	--max-missing-count 116 --mac 3 --remove-indels --max-alleles 2 --min-alleles 2 \
 	--recode \
@@ -47,7 +51,7 @@ vcftools --gzvcf $DENOVO/populations.snps.vcf \
 	# output missing individual report
 	vcftools --gzvcf $OUTDIR/stacks_denovo.vcf.gz --out $OUTDIR/stacks_denovo --missing-indv
 
-# stacks refmap-------------------------------
+# stacks refmap-----------------------------------------------------------------------
 vcftools --gzvcf $REFMAP/populations.snps.dict.vcf.gz \
 	--max-missing-count 116 --mac 3 --remove-indels --max-alleles 2 --min-alleles 2 \
 	--recode \
@@ -57,7 +61,7 @@ vcftools --gzvcf $REFMAP/populations.snps.dict.vcf.gz \
 	# output missing individual report
 	vcftools --gzvcf $OUTDIR/stacks_refmap.vcf.gz --out $OUTDIR/stacks_refmap --missing-indv
 
-# freebayes------------------------------------
+# freebayes----------------------------------------------------------------------------
 	# - note also that:
 		# 1. bcftools norm normalizes variant representation
 		# 2. vcfallelic primitives breaks down haplotype alleles into constituent parts

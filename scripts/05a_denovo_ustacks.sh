@@ -13,14 +13,22 @@
 
 echo "host name : " `hostname`
 echo This is array task number $SLURM_ARRAY_TASK_ID
+date
 
-module load stacks/2.53
+############################
+# run `ustacks`
+############################
+
+# ustacks is the first step of the stacks de novo pipeline
 
 # this is an array job. the code will be run 33 times, once for each sample, with 20 jobs running simultaneously.
 # each instance will have a SLURM_ARRAY_TASK_ID between 0 and 32. 
 # we use the SLURM_ARRAY_TASK_ID to grab a different sample for each job. 
 
-#input/output directories, supplementary files
+# load software--------------------------------------------------------------------------------
+module load stacks/2.53
+
+#input/output directories, supplementary files-------------------------------------------------
 INDIR=../data/demux
 
 # make output directory if it doesn't exist
@@ -38,7 +46,7 @@ ID=$(expr 1 + $SLURM_ARRAY_TASK_ID)
 # pull the sample ID from the fastq file name using grep
 SAM=$(basename $INFILE .1.fq.gz)
 
-# run ustacks
+# run ustacks--------------------------------------------------------------------------------
 ustacks \
 -f $INFILE \
 -o $OUTDIR \

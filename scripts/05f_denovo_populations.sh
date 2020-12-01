@@ -10,19 +10,23 @@
 #SBATCH --qos=general
 #SBATCH --partition=general
 
-
 hostname
 date
 
-# load software
+############################
+# run `populations`
+############################
+
+# populatins is the sixth and final step of the stacks de novo pipeline
+
+# load software------------------------------------------------------------
 module load stacks/2.53
 
-# input, output files, directories
-
+# input, output files, directories-----------------------------------------
 INDIR=../results/stacks/denovo
-
 POPMAP=../meta/popmap_total.txt
 
+# run populations----------------------------------------------------------
 populations \
 -P $INDIR \
 -M $POPMAP \

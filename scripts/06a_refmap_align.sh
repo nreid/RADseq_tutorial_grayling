@@ -11,15 +11,20 @@
 #SBATCH --qos=general
 #SBATCH --array=[0-552]%100
 
-
 hostname
 date
 
-# load software
+##################################
+# align sequences to the reference
+##################################
+
+# this script aligns sequences to the reference genome
+
+# load software--------------------------------------------------------------------------------
 module load bwa/0.7.17
 module load samtools/1.10
 
-# input, output files and directories
+# input, output files and directories----------------------------------------------------------
 INDIR=../data/demux
 
 OUTDIR=../results/aligned
@@ -47,6 +52,7 @@ RG=$(echo \@RG\\tID:$SAM\\tSM:$SAM)
 echo $OUTDIR
 echo $BAM
 
+# align sequences--------------------------------------------------------------------------------
 # run bwa mem to align, then pipe it to samtools to compress, then again to sort
 bwa mem -t 4 -R $RG $REFERENCE $FQ1 $FQ2 | \
 samtools view -S -h -u - | \

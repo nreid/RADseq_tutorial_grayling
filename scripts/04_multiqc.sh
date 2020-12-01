@@ -12,6 +12,12 @@
 #SBATCH -e %x_%j.err
 
 
+#######################
+# run multiqc
+#######################
+
+# aggregate fastqc reports
+
 # input, output directories
 INDIR=../results/fastqc
 

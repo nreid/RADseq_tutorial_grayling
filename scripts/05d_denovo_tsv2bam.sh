@@ -10,19 +10,25 @@
 #SBATCH --qos=general
 #SBATCH --partition=general
 
-
 hostname
 date
 
-# load software
+############################
+# run `tsv2bam`
+############################
+
+# tsv2bam is the fourth step of the stacks de novo pipeline
+
+# load software------------------------------------------------------------
 module load stacks/2.53
 
-# input, output files, directories
+# input, output files, directories-----------------------------------------
 
 INDIR=../results/stacks/denovo
 PEDIR=../data/demux
 POPMAP=../meta/popmap_total.txt
 
+# run tsv2bam---------------------------------------------------------------
 tsv2bam \
 -P $INDIR \
 -M $POPMAP \

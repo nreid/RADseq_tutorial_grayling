@@ -11,6 +11,12 @@
 #SBATCH -o %x_%j.out
 #SBATCH -e %x_%j.err
 
+hostname
+date
+
+#####################################
+# compare freebayes and stacks refmap
+#####################################
 
 module load bcftools/1.9
 module load htslib/1.9

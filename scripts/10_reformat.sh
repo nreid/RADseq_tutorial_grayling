@@ -14,11 +14,15 @@
 hostname
 date
 
+#####################################
+# reformat data
+#####################################
+
 module load bcftools/1.9
 module load plink/2.00a2.3LM
 
 # note that plink2 requires avx instructions (I think?) which requires a xeon processor
-# submit to xeon partition
+	# submit to xeon partition
 
 # input/output directories
 INDIR=../results/filtered_vcfs

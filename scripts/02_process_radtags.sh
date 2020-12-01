@@ -14,25 +14,30 @@
 #SBATCH -e %x_%A_%a.err
 
 
+############################
+# demultiplex pooled data
+############################
+
 # This script demultiplexes each pool of RAD-seq data
 # It's an array script, so it submits 12 jobs, one for each pool
 
 module load stacks/2.53
 
-# get/set input, output directories
+# set input/output directories
 INDIR=../data/pools/
 META=../meta
 
 OUTDIR=../data/demux/
 mkdir -p $OUTDIR
 
-# make a bash array of R1 pool fastq files
+# make a bash array of Read 1 pool fastq files
 POOL=($(ls $INDIR/*R1*))
 
 # make a bash array of 3-digit indexes for each pool:
 IND=({001..012})
 
 # get fastq and barcode file names for this array instance:
+	# variable $SLURM_ARRAY_TASK_ID changes for each array instance
 
 FQ1=${POOL[$SLURM_ARRAY_TASK_ID]}
 FQ2=$(echo ${POOL[$SLURM_ARRAY_TASK_ID]} | sed 's/R1/R2/')
@@ -40,6 +45,7 @@ FQ2=$(echo ${POOL[$SLURM_ARRAY_TASK_ID]} | sed 's/R1/R2/')
 IND1=${IND[$SLURM_ARRAY_TASK_ID]}
 BARCODE=$META/barcodes_${IND1}.txt
 
+# run stacks process_radtags
 process_radtags \
 -i gzfastq \
 -1 $FQ1 \
