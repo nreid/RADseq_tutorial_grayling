@@ -6,7 +6,7 @@
 #SBATCH --mail-user=
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=5G
+#SBATCH --mem=8G
 #SBATCH --partition=general
 #SBATCH --qos=general
 #SBATCH --array=[0-552]%100
