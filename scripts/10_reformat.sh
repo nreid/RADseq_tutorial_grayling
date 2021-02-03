@@ -30,11 +30,14 @@ OUTDIR=../results/variants_reformatted
 mkdir -p $OUTDIR
 
 # generate plink formatted file
-plink2 --vcf $INDIR/fb_final.vcf.gz --allow-extra-chr --make-bed --out $OUTDIR/fb
+plink2 --vcf $INDIR/fb_final.vcf.gz --allow-extra-chr --make-bed --out $OUTDIR/fb 
 	# change chromosome names to integers so ADMIXTURE doesn't complain
 	sed -i -E 's/CM(......).1/\1/; s/QMII(........).1/\1/' $OUTDIR/fb.bim
 
 # create a reformatted file with genotypes only
 bcftools query -H -f '%CHROM\t%POS\t[\t%GT]\n' $INDIR/fb_final.vcf.gz >$OUTDIR/fb_genos.tsv
+
+bcftools query -H -f '%CHROM\t%POS\t[\t%GT]\n' $INDIR/refmap_final.vcf.gz >$OUTDIR/refmap_genos.tsv
+
 
 

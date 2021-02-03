@@ -52,8 +52,8 @@ bash freebayes_parallel.sh \
 	--bam-list $OUTDIR/bam.list \
 	-m 30 \
 	-q 20 \
-	--min-coverage 1500 \
-	--skip-coverage 30000 | \
+	--min-coverage 1000 \
+	--skip-coverage 40000 | \
 bgzip -c >$OUTDIR/fb_parallel.vcf.gz
 
 # index the vcf file

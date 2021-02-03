@@ -55,3 +55,26 @@ mp3_1[,2] <- mp3_1[,2] - 1
 write.table(mp3[,1:3],"../meta/sbf1.bed",sep="\t",row.names=FALSE,col.names=FALSE,quote=FALSE)
 write.table(mp3_1[,1:3],"../meta/sbf1_off.bed",sep="\t",row.names=FALSE,col.names=FALSE,quote=FALSE)
 
+
+# find the distances from sbf1 to mseI cut sites
+
+# mseI: TTAA
+
+# find msei sites and get granges object
+msei <- vmatchPattern("TTAA",seqs)
+msei2 <- as(msei, "GRanges")
+
+# get closest upstream and downstream msei cut sites to sbf1 cut sites
+rightind <- precede(mp2,msei2,"first")
+	NOrightNA <- !is.na(rightind)
+leftind <- follow(mp2,msei2,"last")
+	NOleftNA <- !is.na(leftind)
+
+out <- matrix(nrow=length(mp2),ncol=2)
+
+out[NOrightNA,1] <- distance(mp2[NOrightNA,],msei2[rightind[NOrightNA],])
+out[NOleftNA,2] <- distance(mp2[NOleftNA,],msei2[leftind[NOleftNA],])
+
+# `out` now contains all SbfI-MseI RAD fragment lengths in the reference genome. 
+	# column 1 is the left side of SbfI, column 2 is the right. 
+	

@@ -15,7 +15,7 @@
 # get reference genome
 ######################
 
-# download genome assembly for Arctic grayling, Thymallus thymallus
+# download genome assembly for grayling, Thymallus thymallus
 # NCBI accession # GCA_004348285.1
 
 # output directory
