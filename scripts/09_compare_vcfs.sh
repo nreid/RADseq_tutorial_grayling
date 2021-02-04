@@ -46,7 +46,7 @@ vt partition $INDIR/fb_final.vcf.gz $INDIR/refmap_final.vcf.gz
 bcftools isec -O z -p $INDIR/isec $INDIR/fb_final.vcf.gz $INDIR/refmap_final.vcf.gz
 
 #####################################
-# why do we have such a discrepancy?
+# can we investigate discrepancies?
 #####################################
 
 # sbf1.bed.gz gives the location of all sbf1 sites in the genome. 

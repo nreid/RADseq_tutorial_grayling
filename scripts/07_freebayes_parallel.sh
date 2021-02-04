@@ -53,7 +53,7 @@ bash freebayes_parallel.sh \
 	-m 30 \
 	-q 20 \
 	--min-coverage 1000 \
-	--skip-coverage 40000 | \
+	--skip-coverage 50000 | \
 bgzip -c >$OUTDIR/fb_parallel.vcf.gz
 
 # index the vcf file
